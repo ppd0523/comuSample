@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script defer src="/static/alpinejs@3.10.2.js"></script>
+  <script src="/static/d3.v7.js"></script>
+  <link rel="stylesheet" href="/static/pico.css">
+<!--  <link rel="stylesheet" href="/static/fontawesome.min.css">-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  <style>
+    nav ul {
+      justify-content: space-around;
+      width: 100%;
+    }
+    input {
+      font-size: 1.75em;
+    }
+    [x-cloak]{ display: none !important;}
+  </style>
+  <title>Title</title>
+</head>
+<body>
+  <header x-data x-init="">
+    <hgroup class="container">
+      <h1 x-text="$store.global.status"></h1>
+      <h2>jkl</h2>
+    </hgroup>
+  </header>
+  <main class="container" x-data="" x-init="">
+    <article id="login"
+             x-cloak
+             x-transition:enter.delay.100ms
+             x-show="$store.global.status == 'login'">
+      <hgroup>
+        <h1 class="">껄무버드 서비스</h1>
+        <h2>당신이 샀어야 할 종목을 알려드립니다</h2>
+      </hgroup>
+      <form>
+        <input type="text" name="username" placeholder="Email address" aria-label="Username">
+        <input type="password" name="password" placeholder="Password" aria-label="Username">
+        <p style="visibility: visible; color: red">Email 혹은 비밀번호가 유효하지 않습니다</p>
+        <div class="grid">
+          <button type="submit" class="" x-on:click="">접속</button>
+          <button type="button" class="contrast" x-on:click="">회원가입</button>
+        </div>
+      </form>
+    </article>
+    <article id="portfolio"
+             x-cloak
+             x-transition:enter.delay.100ms
+             x-show="$store.global.status == 'portfolio'">
+
+    </article>
+    <article id="filter"
+             x-cloak
+             x-transition:enter.delay.100ms
+             x-show="$store.global.status == 'filter'">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid aspernatur consectetur delectus dicta excepturi fugiat ipsam itaque maiores modi natus officia quod, rem similique voluptatum! A ea magnam tempora?
+    </article>
+    <article id="stock"
+             x-cloak
+             x-transition:enter.delay.100ms
+             x-show="$store.global.status == 'stock'">
+      <div class="grid">
+        <div><input type="text"></div>
+        <div><i class="fas fa-search"></i></div>
+      </div>
+
+
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci cumque dolor, ex facilis fugiat magnam perspiciatis provident quibusdam quidem quo repudiandae sequi totam. Culpa deserunt iusto, nesciunt odit quibusdam rerum?
+    </article>
+  </main>
+  <footer x-data>
+    <hr>
+    <nav>
+      <ul>
+        <li @click="$store.global.status='portfolio'">
+          <i class="fas fa-star fa-lg"> 즐겨찾기</i></li>
+        <li @click="$store.global.status='filter'">
+          <i class="fas fa-filter fa-lg"> 조건식</i></li>
+        <li @click="$store.global.status='stock'">
+          <i class="fas fa-chart-bar fa-lg"> 종목</i></li>
+      </ul>
+    </nav>
+  </footer>
+  <script>
+    document.addEventListener('alpine:init', ()=>{
+      Alpine.data('init', ()=>({}));
+
+      Alpine.store('global', {
+        _status : 'stock',
+        PAGES: ['login', 'portfolio', 'filter', 'stock'],
+        get status(){
+          return this._status;
+        },
+        set status(value){
+          if (this.PAGES.includes(value)){
+            this._status = value;
+            return true;
+          }
+          throw Error("Status is NOT included", this.PAGES);
+        }
+      }); // Alpine.store
+
+    }); // document.addEventListener
+
+
+
+  </script>
+</body>
+</html>
